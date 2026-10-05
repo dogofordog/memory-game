@@ -76,6 +76,18 @@ movesCounter.textContent = `Moves: ${moves}`;
 pairsCounter.textContent = `Pairs: ${pairs} из 8`;
 }
 
+const winDialog = document.createElement('dialog');
+const winTitle = document.createElement('h2');
+winTitle.textContent = 'Победа!'
+const winMessage = document.createElement('p');
+winMessage.textContent = 'Ходов: 0';
+const winCloseButton = document.createElement('button');
+winCloseButton.textContent = 'Закрыть'
+winDialog.append(winTitle, winMessage, winCloseButton);
+document.body.append(winDialog);
+winCloseButton.addEventListener('click', () => { 
+    winDialog.close(); });
+
 board.addEventListener('click',(event)=>{
 const card = event.target.closest('.card');
 if (lock) return;
@@ -100,6 +112,11 @@ card.classList.add('card-matched');
 firstCard=null;
 pairs += 1;
 updateStats();
+if (pairs===8){
+winMessage.textContent = `Ходов: ${moves}`;
+winDialog.showModal();
+}
+
 }
 
 else {

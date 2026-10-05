@@ -66,3 +66,51 @@ img.alt = 'Картинка';
 card.append(img);
 board.append(card);
 }
+let firstCard = null;
+let lock = false;
+let moves = 0;
+let pairs = 0;
+
+const updateStats = () =>{
+movesCounter.textContent = `Moves: ${moves}`;
+pairsCounter.textContent = `Pairs: ${pairs} из 8`;
+}
+
+board.addEventListener('click',(event)=>{
+const card = event.target.closest('.card');
+if (lock) return;
+if (!card)
+    return; 
+if (card.classList.contains('card-open'))
+    return;
+if (card.classList.contains('card-matched'))
+    return;
+card.classList.add('card-open');
+
+if (firstCard === null) {
+  firstCard = card;
+  return; 
+}
+moves += 1;
+updateStats();
+
+if (firstCard.dataset.id === card.dataset.id) {
+firstCard.classList.add('card-matched');
+card.classList.add('card-matched');
+firstCard=null;
+pairs += 1;
+updateStats();
+}
+
+else {
+    lock = true;
+    setTimeout(() => {
+      firstCard.classList.remove('card-open');
+      card.classList.remove('card-open');
+      firstCard = null;
+      lock = false;
+    }, 1000);
+}
+});
+
+

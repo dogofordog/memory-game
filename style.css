@@ -34,3 +34,11 @@ dialog {
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+.card-image {
+  display: none;
+}
+
+.card.card-open .card-image {
+  display: block;
+}

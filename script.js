@@ -56,6 +56,7 @@ return array;
 const cardImages = [...images, ...images];
 
 let firstCard = null;
+let closeTimerId = null;
 let lock = false;
 let moves = 0;
 let pairs = 0;
@@ -76,6 +77,22 @@ winDialog.append(winTitle, winMessage, winCloseButton);
 document.body.append(winDialog);
 winCloseButton.addEventListener('click', () => { 
     winDialog.close(); });
+
+const getFormattedDate = ()=>{
+    const now = new Date();
+    const day = now.getDate();
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+const date = `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`
+return date; };
+const saveResult= (moves)=>{
+const stored = localStorage.getItem('results');
+const results = stored ? JSON.parse(stored) : [];
+const newResult = { moves, date: getFormattedDate() };
+results.push(newResult);
+localStorage.setItem('results', JSON.stringify(results));
+};
+   
 
 board.addEventListener('click',(event)=>{
 const card = event.target.closest('.card');
@@ -103,6 +120,7 @@ pairs += 1;
 updateStats();
 if (pairs===8){
 winMessage.textContent = `Ходов: ${moves}`;
+saveResult(moves);
 winDialog.showModal();
 }
 
@@ -110,11 +128,12 @@ winDialog.showModal();
 
 else {
     lock = true;
-    setTimeout(() => {
+    closeTimerId = setTimeout(() => {
       firstCard.classList.remove('card-open');
       card.classList.remove('card-open');
       firstCard = null;
       lock = false;
+      closeTimerId = null; 
     }, 1000);
 }
 });
@@ -138,6 +157,10 @@ const card = document.createElement('div');
 
 
 const startNewGame = ()=>{
+    if (closeTimerId) {
+  clearTimeout(closeTimerId);
+  closeTimerId = null;
+}
 moves = 0;
 pairs = 0;
 firstCard = null;
@@ -147,5 +170,7 @@ createCards();
 winDialog.close();
 
 }
+
+
 createCards();
 newGameButton.addEventListener('click', startNewGame);

@@ -164,7 +164,7 @@ board.addEventListener("click", (event) => {
     firstCard = null;
     pairs += 1;
     updateStats();
-    if (pairs === 8) {
+    if (pairs === 1) {
       winMessage.textContent = `Ходов: ${moves}`;
       saveResult(moves);
       winDialog.showModal();

@@ -193,6 +193,7 @@ dialog p {
 
 dialog button {
   padding: 9px 20px;
+  margin: 0 5px;
   border: 1px solid #8b4332;
   border-radius: 7px;
   color: #fff;
@@ -204,6 +205,9 @@ dialog button {
 
 dialog button:hover {
   background-color: #873f30;
+}
+dialog button + button {
+  margin-left: 10px;
 }
 
 dialog ol {

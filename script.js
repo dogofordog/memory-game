@@ -43,8 +43,18 @@ const images = [
   'assets/img/8.png',
 ];
 
-const cardImages = [...images, ...images];
+const shuffle = (array)=>{
+    for (let i = array.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];   
+    array[i] = array[j];     
+    array[j] = temp; 
+}
+return array;
+}
 
+const cardImages = [...images, ...images];
+shuffle(cardImages);
 for (const item of cardImages) {
 const card = document.createElement('div');
 card.classList.add('card');

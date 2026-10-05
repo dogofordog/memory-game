@@ -54,18 +54,7 @@ return array;
 }
 
 const cardImages = [...images, ...images];
-shuffle(cardImages);
-for (const item of cardImages) {
-const card = document.createElement('div');
-card.classList.add('card');
-card.dataset.id = images.indexOf(item);
-const img = document.createElement('img');
-img.classList.add('card-image');
-img.src = item;
-img.alt = 'Картинка';
-card.append(img);
-board.append(card);
-}
+
 let firstCard = null;
 let lock = false;
 let moves = 0;
@@ -130,4 +119,33 @@ else {
 }
 });
 
+const createCards = ()=>{
+const cards = board.querySelectorAll('.card');
+cards.forEach((card) => card.remove());
+shuffle(cardImages);
+for (const item of cardImages) {
+const card = document.createElement('div');
+  card.classList.add('card');
+  card.dataset.id = images.indexOf(item);
+  const img = document.createElement('img');
+  img.classList.add('card-image');
+  img.src = item;
+  img.alt = 'Картинка';
+  card.append(img);
+  board.append(card);
+}
+}
 
+
+const startNewGame = ()=>{
+moves = 0;
+pairs = 0;
+firstCard = null;
+lock = false;
+updateStats();
+createCards();
+winDialog.close();
+
+}
+createCards();
+newGameButton.addEventListener('click', startNewGame);

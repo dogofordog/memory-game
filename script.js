@@ -2,11 +2,11 @@ const header = document.createElement('header');
 header.classList.add('header');
 
 const newGameButton =document.createElement('button');
-newGameButton.textContent = 'New Game';
+newGameButton.textContent = 'Новая Игра';
 newGameButton.classList.add('new-game');
 
 const leadersButton = document.createElement('button');
-leadersButton.textContent = 'Leaderboard';
+leadersButton.textContent = 'Доска лидеров';
 leadersButton.classList.add('leaders');
 
 header.append(newGameButton,leadersButton);
@@ -31,3 +31,28 @@ pairsCounter.classList.add('pairs');
 
 stats.append(movesCounter, pairsCounter);
 board.append(stats);
+
+const images = [
+  'assets/img/1.png',
+  'assets/img/2.png',
+  'assets/img/3.png',
+  'assets/img/4.png',
+  'assets/img/5.png',
+  'assets/img/6.png',
+  'assets/img/7.png',
+  'assets/img/8.png',
+];
+
+const cardImages = [...images, ...images];
+
+for (const item of cardImages) {
+const card = document.createElement('div');
+card.classList.add('card');
+card.dataset.id = images.indexOf(item);
+const img = document.createElement('img');
+img.classList.add('card-image');
+img.src = item;
+img.alt = 'Картинка';
+card.append(img);
+board.append(card);
+}
